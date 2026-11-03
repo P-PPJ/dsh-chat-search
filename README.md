@@ -132,7 +132,7 @@ https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-searc
 
 把它交给插件安装器即可，不经过源码构建、不需要 `allowBuilds` 授权。
 
-> 插件市场（`dshmarket`）只列出社区精选目录 `awesome-dsh-plugin` 里的条目，自己仓库的包搜不到——所以本仓库已经按目录的收录要求整理好了（`package.json` 里的 `dsh.bundle` 清单、根目录的 `screenshots.json`、`assets/` 下的位图图标、Release 上的预构建 tarball）。收录后就能在 **插件 → 市场** 里搜 `search` 找到并一键安装。
+> **已收录进社区目录**：`插件 → 市场` 里搜 `dsh-chat-search` 就能找到（条目是 `awesome-dsh-plugin` 的 [PR #10155](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/10155)，账号改名为 `P-PPJ` 后由 [PR #11623](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/11623) 更新地址）。目录只收精选条目，所以本仓库按它的要求整理过：`package.json` 里有 `dsh.bundle`、根目录有 `screenshots.json`、`assets/` 下是位图图标、Release 上有预构建 tarball。
 
 > ⚠️ **与同名旧插件冲突**：社区里另一个也叫 `dsh-chat-search` 的包（`helo060228/dsh-chat-search`）用的是同一个包名。装本插件前请先把旧的那条依赖和 bundle 删掉，否则 npm 会直接覆盖，且两个 bundle 会在同一个 overlay 槽里抢 `Ctrl+F`。
 

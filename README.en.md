@@ -133,7 +133,7 @@ https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-searc
 
 Hand it to the plugin installer: no source build, no `allowBuilds` approval.
 
-> The plugin market (`dshmarket`) only lists entries from the curated `awesome-dsh-plugin` registry, so a package in your own repository cannot be searched there. This repo is already arranged to meet that registry's requirements (`dsh.bundle` in `package.json`, `screenshots.json` at the root, raster icons under `assets/`, a prebuilt tarball on the release) — once it is listed, **Plugins → Market** finds it with a `search` query and installs it in one click.
+> **Listed in the community registry**: search `dsh-chat-search` under **Plugins → Market** ([PR #10155](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/10155), with the address updated by [PR #11623](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin/pull/11623) after the account was renamed to `P-PPJ`). That registry only takes curated entries, so this repo meets its requirements: `dsh.bundle` in `package.json`, `screenshots.json` at the root, raster icons under `assets/`, and a prebuilt tarball on the release.
 
 > ⚠️ **Name clash**: the community plugin `helo060228/dsh-chat-search` uses the same package name. Remove that dependency and bundle entry first — npm would otherwise overwrite one with the other, and both bundles would fight over `Ctrl+F` in the same overlay slot.
 
