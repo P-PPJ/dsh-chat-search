@@ -80,12 +80,26 @@ git ls-remote failed: 'git' 不是内部或外部命令，也不是可运行的�
 | 报错 | 真正原因 | 怎么办 |
 | --- | --- | --- |
 | `'git' 不是内部或外部命令` / `ERR_PNPM_GIT_RESOLVE_FAILED` | 填了仓库地址，但本机没有 Git | 改用 `.tgz` 直链或本地文件；或装 Git |
-| `无法连接 github.com` / `ETIMEDOUT` / `ECONNRESET` | 本机到 GitHub 的线路不通或不稳 | 改用 jsDelivr 直链或本地文件；或配置代理 |
+| `无法连接 github.com` / `ETIMEDOUT` / `ECONNRESET` | 本机到 GitHub 的线路不通或不稳 | 见下方「中国大陆网络下载不动 `.tgz`」：套加速前缀，或交给本地文件 |
 | 卡在 `allowBuilds` 提示 | 某个依赖带安装脚本，被 pnpm 拦下 | 本插件零依赖、零安装脚本，不会出现 |
 
 > ⚠️ **中国大陆无代理实测**：GitHub Release 直链 20 秒后连接被重置（会重定向到 `objects.githubusercontent.com`）；`cdn.jsdelivr.net` 时通时断——同一条链接有时 1 秒下载完，也可能 25 秒超时。安装器对 GitHub 地址和 `.tgz` 直链**不走任何镜像源**，所以这两条在国内并不算稳，报错文案是「无法连接 github.com……需要本机能直接访问它或配置代理」。
 >
 > 四种装法（Release tarball、`git+` 地址、`github:` 简写、CDN tarball）都用 Harness 自带的 pnpm 11 实测过：能连上时 `exit=0`、装出来版本 1.0.1 —— **包本身没有问题：失败要么是本机没有 Git，要么是线路不通，两者都在本机一侧**。
+
+### 中国大陆网络下载不动 `.tgz` 怎么办
+
+Release 直链会 302 到 `objects.githubusercontent.com`，国内常见 `ECONNRESET`。可以给地址套一个加速前缀——规则就是「**镜像前缀 + 完整 GitHub 地址**」，装的是同一份字节（sha256 `51af9c1c…`）：
+
+```
+https://ghfast.top/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://gh-proxy.com/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://ghproxy.net/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+```
+
+实测（无代理）：`ghfast.top` 4.0 秒、`gh-proxy.com` 4.2 秒、`ghproxy.net` 9.6 秒；用第一条地址跑 `pnpm add` 4.6 秒装出 1.0.1，文件校验和与官方一致。
+
+> 这些是**第三方公共镜像**，可用性不由本项目保证；嫌麻烦就把 `.tgz` 下载下来，改用本地路径装（完全不联网）。
 
 **方式 B：放进 profile（本地开发也走这条）**
 

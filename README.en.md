@@ -81,12 +81,26 @@ Seeing that, either switch to one of the `.tgz` addresses above, or install Git 
 | Error | Real cause | Fix |
 | --- | --- | --- |
 | `'git' is not recognized…` / `ERR_PNPM_GIT_RESOLVE_FAILED` | Repository address pasted, but no Git installed | Use a `.tgz` link or local file, or install Git |
-| `Could not connect to github.com` / `ETIMEDOUT` / `ECONNRESET` | No working route from this machine to GitHub | Use the jsDelivr link or a local file, or configure a proxy |
+| `Could not connect to github.com` / `ETIMEDOUT` / `ECONNRESET` | No working route from this machine to GitHub | See "When the `.tgz` will not download": prefix an accelerator, or hand it a local file |
 | Stuck on an `allowBuilds` prompt | A dependency has an install script pnpm blocked | This plugin has no dependencies and no install scripts — cannot happen |
 
 > ⚠️ **Measured from mainland China without a proxy**: a GitHub release link is reset after ~20s (it redirects to `objects.githubusercontent.com`), and `cdn.jsdelivr.net` is intermittent — the same URL sometimes downloads in 1s and sometimes times out at 25s. The installer fetches GitHub addresses and `.tgz` links **directly, not through any mirror**, so neither is dependable there; the error it shows is "could not connect to github.com … this machine must reach it directly or through a proxy".
 >
 > All four forms (release tarball, `git+` address, `github:` shorthand, CDN tarball) were tested with the pnpm 11 that ships inside Harness: `exit=0` and version 1.0.1 whenever the network cooperates — **the package itself is fine: a failure means either Git is missing on the machine or the route is down — both are local conditions.**
+
+### When the `.tgz` will not download (mainland China)
+
+The release link 302s to `objects.githubusercontent.com`, which commonly resets (`ECONNRESET`) from there. Prefix the address with an accelerator — the rule is simply **mirror prefix + the full GitHub address**, same bytes either way (sha256 `51af9c1c…`):
+
+```
+https://ghfast.top/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://gh-proxy.com/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://ghproxy.net/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+```
+
+Measured without a proxy: `ghfast.top` 4.0s, `gh-proxy.com` 4.2s, `ghproxy.net` 9.6s; `pnpm add` with the first one installed 1.0.1 in 4.6s and the checksum matched the official asset.
+
+> Those are **third-party public mirrors** — this project cannot guarantee they stay up. If that is a bother, download the `.tgz` once and install from the local path (no network at all).
 
 **B. Straight into a profile**
 
