@@ -61,8 +61,8 @@ Harness 本身没有对话内查找，`Ctrl+F` 交给浏览器后什么也不会
 不需要 Git 的三种填法，挑一条通得过的即可：
 
 ```
-https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
-https://cdn.jsdelivr.net/gh/1834395550/dsh-chat-search@main/dist/dsh-chat-search-1.0.1.tgz
+https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://cdn.jsdelivr.net/gh/P-PPJ/dsh-chat-search@main/dist/dsh-chat-search-1.0.1.tgz
 D:\某个目录\dsh-chat-search-1.0.1.tgz        ← 本地文件，连网络都不用
 ```
 
@@ -92,9 +92,9 @@ git ls-remote failed: 'git' 不是内部或外部命令，也不是可运行的�
 Release 直链会 302 到 `objects.githubusercontent.com`，国内常见 `ECONNRESET`。可以给地址套一个加速前缀——规则就是「**镜像前缀 + 完整 GitHub 地址**」，装的是同一份字节（sha256 `51af9c1c…`）：
 
 ```
-https://ghfast.top/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
-https://gh-proxy.com/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
-https://ghproxy.net/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://ghfast.top/https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://gh-proxy.com/https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://ghproxy.net/https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
 ```
 
 实测（无代理）：`ghfast.top` 4.0 秒、`gh-proxy.com` 4.2 秒、`ghproxy.net` 9.6 秒；用第一条地址跑 `pnpm add` 4.6 秒装出 1.0.1，文件校验和与官方一致。
@@ -104,7 +104,7 @@ https://ghproxy.net/https://github.com/1834395550/dsh-chat-search/releases/downl
 **方式 B：放进 profile（本地开发也走这条）**
 
 ```powershell
-git clone https://github.com/1834395550/dsh-chat-search.git
+git clone https://github.com/P-PPJ/dsh-chat-search.git
 ```
 
 然后在 profile 的 `package.json`（`%USERPROFILE%\.dsh\profiles\<profile>\package.json`）里加一条依赖和一条 bundle：
@@ -127,7 +127,7 @@ git clone https://github.com/1834395550/dsh-chat-search.git
 **方式 C：Release 预构建包（插件市场装的就是这个）**
 
 ```
-https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
 ```
 
 把它交给插件安装器即可，不经过源码构建、不需要 `allowBuilds` 授权。
@@ -175,4 +175,4 @@ screenshots/      # README 里的界面预览
 
 ## 许可证
 
-MIT © 1834395550
+MIT © P-PPJ

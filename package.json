@@ -14,14 +14,14 @@
     "ctrl-f"
   ],
   "license": "MIT",
-  "author": "1834395550",
-  "homepage": "https://github.com/1834395550/dsh-chat-search#readme",
+  "author": "P-PPJ",
+  "homepage": "https://github.com/P-PPJ/dsh-chat-search#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/1834395550/dsh-chat-search.git"
+    "url": "git+https://github.com/P-PPJ/dsh-chat-search.git"
   },
   "bugs": {
-    "url": "https://github.com/1834395550/dsh-chat-search/issues"
+    "url": "https://github.com/P-PPJ/dsh-chat-search/issues"
   },
   "exports": {
     ".": "./index.js",

@@ -61,8 +61,8 @@ This plugin is written against the current DOM contract, and drops the interrupt
 Three ways that do **not** need Git — pick one whose host you can reach:
 
 ```
-https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
-https://cdn.jsdelivr.net/gh/1834395550/dsh-chat-search@main/dist/dsh-chat-search-1.0.1.tgz
+https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://cdn.jsdelivr.net/gh/P-PPJ/dsh-chat-search@main/dist/dsh-chat-search-1.0.1.tgz
 D:\some\dir\dsh-chat-search-1.0.1.tgz        ← a local file: no network at all
 ```
 
@@ -93,9 +93,9 @@ Seeing that, either switch to one of the `.tgz` addresses above, or install Git 
 The release link 302s to `objects.githubusercontent.com`, which commonly resets (`ECONNRESET`) from there. Prefix the address with an accelerator — the rule is simply **mirror prefix + the full GitHub address**, same bytes either way (sha256 `51af9c1c…`):
 
 ```
-https://ghfast.top/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
-https://gh-proxy.com/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
-https://ghproxy.net/https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://ghfast.top/https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://gh-proxy.com/https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://ghproxy.net/https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
 ```
 
 Measured without a proxy: `ghfast.top` 4.0s, `gh-proxy.com` 4.2s, `ghproxy.net` 9.6s; `pnpm add` with the first one installed 1.0.1 in 4.6s and the checksum matched the official asset.
@@ -105,7 +105,7 @@ Measured without a proxy: `ghfast.top` 4.0s, `gh-proxy.com` 4.2s, `ghproxy.net` 
 **B. Straight into a profile**
 
 ```powershell
-git clone https://github.com/1834395550/dsh-chat-search.git
+git clone https://github.com/P-PPJ/dsh-chat-search.git
 ```
 
 Then add one dependency and one bundle entry to the profile's `package.json` (`%USERPROFILE%\.dsh\profiles\<profile>\package.json`):
@@ -128,7 +128,7 @@ Let Harness install the dependency (it does so on the next start, or run `pnpm i
 **Option C: prebuilt release tarball (what the plugin market installs)**
 
 ```
-https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
+https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
 ```
 
 Hand it to the plugin installer: no source build, no `allowBuilds` approval.
@@ -176,4 +176,4 @@ No build step and no dependencies: `client.js` is one `window.__ModuleLoader__.l
 
 ## License
 
-MIT © 1834395550
+MIT © P-PPJ

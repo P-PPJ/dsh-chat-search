@@ -5,6 +5,6 @@
  * conversation), so there is nothing for the Host to do. The module exists
  * only because every bundle entry needs a module that can be applied.
  *
- * https://github.com/1834395550/dsh-chat-search
+ * https://github.com/P-PPJ/dsh-chat-search
  */
 export function apply() {}
