@@ -54,22 +54,35 @@ This plugin is written against the current DOM contract, and drops the interrupt
 
 > DeepSeek Harness desktop, 0.2.x. Refresh the page afterwards — no restart needed.
 
-**A. Through the plugin installer**
+**A. Through the plugin installer (prefer a `.tgz` link or a local file — no Git required)**
 
 > The dialog's "mainland China mirror" source only rewrites requests for an **npm package name**. A GitHub address or a `.tgz` link bypasses it and must be reachable from the machine itself.
 
-Once the package is on npm, the bare name is all you need (any mirror will do):
-
-```
-dsh-chat-search
-```
-
-Until then, paste one of these — both need the host to be reachable:
+Three ways that do **not** need Git — pick one whose host you can reach:
 
 ```
 https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
 https://cdn.jsdelivr.net/gh/1834395550/dsh-chat-search@main/dist/dsh-chat-search-1.0.1.tgz
+D:\some\dir\dsh-chat-search-1.0.1.tgz        ← a local file: no network at all
 ```
+
+**Pasting the repository address (`https://github.com/owner/repo`) requires Git on the machine.** The installer treats such an address as a git dependency and resolves it with `git ls-remote`; Windows does not ship Git, so without it you inevitably get:
+
+```
+[ERR_PNPM_GIT_RESOLVE_FAILED] Failed to resolve git dependency "https://github.com/...":
+git ls-remote failed: 'git' is not recognized as an internal or external command,
+operable program or batch file.
+```
+
+Seeing that, either switch to one of the `.tgz` addresses above, or install Git for Windows (`winget install Git.Git`) and retry. **That error has nothing to do with the network, and nothing to do with what is in the repository.**
+
+### Error reference
+
+| Error | Real cause | Fix |
+| --- | --- | --- |
+| `'git' is not recognized…` / `ERR_PNPM_GIT_RESOLVE_FAILED` | Repository address pasted, but no Git installed | Use a `.tgz` link or local file, or install Git |
+| `Could not connect to github.com` / `ETIMEDOUT` / `ECONNRESET` | No working route from this machine to GitHub | Use the jsDelivr link or a local file, or configure a proxy |
+| Stuck on an `allowBuilds` prompt | A dependency has an install script pnpm blocked | This plugin has no dependencies and no install scripts — cannot happen |
 
 > ⚠️ **Measured from mainland China without a proxy**: a GitHub release link is reset after ~20s (it redirects to `objects.githubusercontent.com`), and `cdn.jsdelivr.net` is intermittent — the same URL sometimes downloads in 1s and sometimes times out at 25s. The installer fetches GitHub addresses and `.tgz` links **directly, not through any mirror**, so neither is dependable there; the error it shows is "could not connect to github.com … this machine must reach it directly or through a proxy".
 >

@@ -54,22 +54,34 @@ Harness 本身没有对话内查找，`Ctrl+F` 交给浏览器后什么也不会
 
 > 需要 DeepSeek Harness 桌面版（0.2.x）。装完**刷新页面**即可生效，不用重启应用。
 
-**方式 A：插件安装器**
+**方式 A：插件安装器（推荐 `.tgz` 直链或本地文件——不需要 Git）**
 
 > 对话框里的「安装源：中国大陆镜像源」**只改写 npm 包名的请求**。填 GitHub 地址或 `.tgz` 直链时它不参与，必须本机自己连得上。
 
-发布到 npm 之后，最省事的就是填包名（走哪个镜像都行）：
-
-```
-dsh-chat-search
-```
-
-还没发布前，只能用地址，二者都需要本机能访问对应主机：
+不需要 Git 的三种填法，挑一条通得过的即可：
 
 ```
 https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
 https://cdn.jsdelivr.net/gh/1834395550/dsh-chat-search@main/dist/dsh-chat-search-1.0.1.tgz
+D:\某个目录\dsh-chat-search-1.0.1.tgz        ← 本地文件，连网络都不用
 ```
+
+**填仓库地址（`https://github.com/owner/repo`）则需要本机装过 Git。** 安装器会把这种地址当 git 依赖，用 `git ls-remote` 去解析；Windows 不自带 Git，没装就必然报这一条：
+
+```
+[ERR_PNPM_GIT_RESOLVE_FAILED] Failed to resolve git dependency "https://github.com/...":
+git ls-remote failed: 'git' 不是内部或外部命令，也不是可运行的程序或批处理文件。
+```
+
+看到这句，要么把地址换成上面的 `.tgz`，要么先装 Git for Windows（`winget install Git.Git`）再重试。**这条报错和网络无关，和仓库里放了什么也无关。**
+
+### 安装报错对照
+
+| 报错 | 真正原因 | 怎么办 |
+| --- | --- | --- |
+| `'git' 不是内部或外部命令` / `ERR_PNPM_GIT_RESOLVE_FAILED` | 填了仓库地址，但本机没有 Git | 改用 `.tgz` 直链或本地文件；或装 Git |
+| `无法连接 github.com` / `ETIMEDOUT` / `ECONNRESET` | 本机到 GitHub 的线路不通或不稳 | 改用 jsDelivr 直链或本地文件；或配置代理 |
+| 卡在 `allowBuilds` 提示 | 某个依赖带安装脚本，被 pnpm 拦下 | 本插件零依赖、零安装脚本，不会出现 |
 
 > ⚠️ **中国大陆无代理实测**：GitHub Release 直链 20 秒后连接被重置（会重定向到 `objects.githubusercontent.com`）；`cdn.jsdelivr.net` 时通时断——同一条链接有时 1 秒下载完，也可能 25 秒超时。安装器对 GitHub 地址和 `.tgz` 直链**不走任何镜像源**，所以这两条在国内并不算稳，报错文案是「无法连接 github.com……需要本机能直接访问它或配置代理」。
 >
