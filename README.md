@@ -153,6 +153,24 @@ https://github.com/P-PPJ/dsh-chat-search/releases/download/v1.0.1/dsh-chat-searc
 - **需要 CSS Custom Highlight API**（Chromium 105+，Harness 桌面版满足）；不支持时仍能定位跳转，只是不染色。
 - **绑定宿主 DOM 契约**：依赖 `data-conversation-*` 这几个属性。Harness 大版本改了结构就需要更新插件（这也是老插件坏掉的原因）。
 
+## 想发布自己的 DSH 插件？
+
+仓库根目录还有一份技能 [`publishing-dsh-plugin/`](publishing-dsh-plugin/SKILL.md)——把这个插件从「本地能跑」推到「别人贴个地址就能装」的完整过程：打包、推 GitHub、写 README、进社区目录，以及对方装不上时怎么一条条查下去。
+
+放进 `~/.dsh/skills/`（Windows 是 `C:\Users\<你>\.dsh\skills\`），新开一个会话就能用：
+
+```powershell
+git clone https://github.com/P-PPJ/dsh-chat-search.git
+Copy-Item .\dsh-chat-search\publishing-dsh-plugin "$env:USERPROFILE\.dsh\skills\" -Recurse
+```
+
+| 文件 | 内容 |
+| --- | --- |
+| `SKILL.md` | 六道关卡：注册 → 打包 → GitHub → README → 目录 → 安装链路，附交付前检查清单 |
+| `references/readme-template.md` | 可直接套用的 README 骨架 |
+| `references/registry-entry.md` | 目录条目字段、分类枚举、纯 API 提 PR、改名后的迁移 |
+| `references/install-troubleshooting.md` | 报错原文 → 真因 → 解法（含实测数字） |
+
 ## 文件结构
 
 ```
@@ -163,6 +181,7 @@ locale/zh.json    # 插件信息（名称/简介）
 locale/en.json
 icon.svg
 screenshots/      # README 里的界面预览
+publishing-dsh-plugin/  # 发布技能（不属于插件本体，不会打进 npm 包）
 ```
 
 没有构建步骤、没有第三方依赖：`client.js` 是一个 `window.__ModuleLoader__.load({...})` 的工厂函数，React 从宿主模块表里 `require('react')` 拿。

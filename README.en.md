@@ -154,6 +154,24 @@ Hand it to the plugin installer: no source build, no `allowBuilds` approval.
 - **Needs the CSS Custom Highlight API** (Chromium 105+; the desktop app has it). Without it navigation still works, just without colour.
 - **Bound to the host DOM contract** (`data-conversation-*`). A major Harness layout change needs an update here — the same reason the old plugin stopped working.
 
+## Shipping your own DSH plugin
+
+The repository root also carries a skill, [`publishing-dsh-plugin/`](publishing-dsh-plugin/SKILL.md): the whole path from "it works on my machine" to "someone else pastes a link and it installs" — packaging the bundle, pushing to GitHub, writing the README, getting into the community registry, and diagnosing an install that fails on the other side.
+
+Drop it into `~/.dsh/skills/` (`C:\Users\<you>\.dsh\skills\` on Windows) and it is available in the next session:
+
+```powershell
+git clone https://github.com/P-PPJ/dsh-chat-search.git
+Copy-Item .\dsh-chat-search\publishing-dsh-plugin "$env:USERPROFILE\.dsh\skills\" -Recurse
+```
+
+| File | Covers |
+| --- | --- |
+| `SKILL.md` | Six gates: register → package → GitHub → README → registry → install chain, plus a pre-release checklist |
+| `references/readme-template.md` | A README skeleton you can fill in |
+| `references/registry-entry.md` | Registry entry fields, category enum, opening the PR through the API, renaming later |
+| `references/install-troubleshooting.md` | Error text → real cause → fix, with measured numbers |
+
 ## Layout
 
 ```
@@ -164,6 +182,7 @@ locale/zh.json    # plugin metadata (title, description)
 locale/en.json
 icon.svg
 screenshots/      # the previews used above
+publishing-dsh-plugin/  # the publishing skill (not part of the plugin, not in the npm tarball)
 ```
 
 No build step and no dependencies: `client.js` is one `window.__ModuleLoader__.load({...})` factory that takes React from the host's module table.
