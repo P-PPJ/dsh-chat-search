@@ -86,7 +86,7 @@ Seeing that, either switch to one of the `.tgz` addresses above, or install Git 
 
 > ⚠️ **Measured from mainland China without a proxy**: a GitHub release link is reset after ~20s (it redirects to `objects.githubusercontent.com`), and `cdn.jsdelivr.net` is intermittent — the same URL sometimes downloads in 1s and sometimes times out at 25s. The installer fetches GitHub addresses and `.tgz` links **directly, not through any mirror**, so neither is dependable there; the error it shows is "could not connect to github.com … this machine must reach it directly or through a proxy".
 >
-> All four forms (release tarball, `git+` address, `github:` shorthand, CDN tarball) were tested with the pnpm 11 that ships inside Harness: `exit=0` and version 1.0.1 whenever the network cooperates — **the package itself is fine; failures are network failures.**
+> All four forms (release tarball, `git+` address, `github:` shorthand, CDN tarball) were tested with the pnpm 11 that ships inside Harness: `exit=0` and version 1.0.1 whenever the network cooperates — **the package itself is fine: a failure means either Git is missing on the machine or the route is down — both are local conditions.**
 
 **B. Straight into a profile**
 

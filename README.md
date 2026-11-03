@@ -85,7 +85,7 @@ git ls-remote failed: 'git' 不是内部或外部命令，也不是可运行的�
 
 > ⚠️ **中国大陆无代理实测**：GitHub Release 直链 20 秒后连接被重置（会重定向到 `objects.githubusercontent.com`）；`cdn.jsdelivr.net` 时通时断——同一条链接有时 1 秒下载完，也可能 25 秒超时。安装器对 GitHub 地址和 `.tgz` 直链**不走任何镜像源**，所以这两条在国内并不算稳，报错文案是「无法连接 github.com……需要本机能直接访问它或配置代理」。
 >
-> 四种装法（Release tarball、`git+` 地址、`github:` 简写、CDN tarball）都用 Harness 自带的 pnpm 11 实测过：能连上时 `exit=0`、装出来版本 1.0.1 —— **包本身没有问题，失败只来自网络**。
+> 四种装法（Release tarball、`git+` 地址、`github:` 简写、CDN tarball）都用 Harness 自带的 pnpm 11 实测过：能连上时 `exit=0`、装出来版本 1.0.1 —— **包本身没有问题：失败要么是本机没有 Git，要么是线路不通，两者都在本机一侧**。
 
 **方式 B：放进 profile（本地开发也走这条）**
 
