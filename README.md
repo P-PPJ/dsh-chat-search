@@ -54,24 +54,26 @@ Harness 本身没有对话内查找，`Ctrl+F` 交给浏览器后什么也不会
 
 > 需要 DeepSeek Harness 桌面版（0.2.x）。装完**刷新页面**即可生效，不用重启应用。
 
-**方式 A：插件安装器（最省事）**
+**方式 A：插件安装器**
 
-在 Harness 的 **插件 → 添加插件** 输入框里粘地址。国内网络优先用下面这条——它走 jsDelivr CDN，**不需要代理**，实测 2 秒装完：
+> 对话框里的「安装源：中国大陆镜像源」**只改写 npm 包名的请求**。填 GitHub 地址或 `.tgz` 直链时它不参与，必须本机自己连得上。
+
+发布到 npm 之后，最省事的就是填包名（走哪个镜像都行）：
 
 ```
+dsh-chat-search
+```
+
+还没发布前，只能用地址，二者都需要本机能访问对应主机：
+
+```
+https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
 https://cdn.jsdelivr.net/gh/1834395550/dsh-chat-search@main/dist/dsh-chat-search-1.0.1.tgz
 ```
 
-能直连 GitHub 的话，仓库地址或 Release 包也行：
-
-```
-git+https://github.com/1834395550/dsh-chat-search.git
-https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
-```
-
-> ⚠️ **国内网络直接用 GitHub 地址会报错**：GitHub 的 Release 下载会重定向到 `objects.githubusercontent.com`，这个域名在境内被重置，而安装器对 GitHub 地址和 `.tgz` 直链**不走镜像源**（必须本机直连），于是报「无法连接 github.com……需要本机能直接访问它或配置代理」。这不是包本身的问题——开代理，或者改用上面的 jsDelivr 地址即可。
-
-> 填包名 `dsh-chat-search` 现在还不行：包还没发到 npm。发布之后这条会成为最快的安装方式。
+> ⚠️ **中国大陆无代理实测**：GitHub Release 直链 20 秒后连接被重置（会重定向到 `objects.githubusercontent.com`）；`cdn.jsdelivr.net` 时通时断——同一条链接有时 1 秒下载完，也可能 25 秒超时。安装器对 GitHub 地址和 `.tgz` 直链**不走任何镜像源**，所以这两条在国内并不算稳，报错文案是「无法连接 github.com……需要本机能直接访问它或配置代理」。
+>
+> 四种装法（Release tarball、`git+` 地址、`github:` 简写、CDN tarball）都用 Harness 自带的 pnpm 11 实测过：能连上时 `exit=0`、装出来版本 1.0.1 —— **包本身没有问题，失败只来自网络**。
 
 **方式 B：放进 profile（本地开发也走这条）**
 

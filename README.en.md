@@ -56,22 +56,24 @@ This plugin is written against the current DOM contract, and drops the interrupt
 
 **A. Through the plugin installer**
 
-Paste one of these into **Plugins → Add plugin**. Behind the Great Firewall use the first one — it is served by jsDelivr and needs no proxy (installed in ~2s in testing):
+> The dialog's "mainland China mirror" source only rewrites requests for an **npm package name**. A GitHub address or a `.tgz` link bypasses it and must be reachable from the machine itself.
+
+Once the package is on npm, the bare name is all you need (any mirror will do):
 
 ```
+dsh-chat-search
+```
+
+Until then, paste one of these — both need the host to be reachable:
+
+```
+https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
 https://cdn.jsdelivr.net/gh/1834395550/dsh-chat-search@main/dist/dsh-chat-search-1.0.1.tgz
 ```
 
-With unobstructed access to GitHub, the repository or the release asset works too:
-
-```
-git+https://github.com/1834395550/dsh-chat-search.git
-https://github.com/1834395550/dsh-chat-search/releases/download/v1.0.1/dsh-chat-search-1.0.1.tgz
-```
-
-> ⚠️ **A GitHub address fails on networks that cannot reach GitHub**: release downloads redirect to `objects.githubusercontent.com`, which is reset in mainland China, and the installer fetches GitHub addresses and `.tgz` links **directly, not through a registry mirror**, so it reports "could not connect to github.com". That is the network, not the package — use a proxy, or the jsDelivr link above.
-
-> The bare package name `dsh-chat-search` does not work yet: the package is not on npm. Once it is, that becomes the shortest path.
+> ⚠️ **Measured from mainland China without a proxy**: a GitHub release link is reset after ~20s (it redirects to `objects.githubusercontent.com`), and `cdn.jsdelivr.net` is intermittent — the same URL sometimes downloads in 1s and sometimes times out at 25s. The installer fetches GitHub addresses and `.tgz` links **directly, not through any mirror**, so neither is dependable there; the error it shows is "could not connect to github.com … this machine must reach it directly or through a proxy".
+>
+> All four forms (release tarball, `git+` address, `github:` shorthand, CDN tarball) were tested with the pnpm 11 that ships inside Harness: `exit=0` and version 1.0.1 whenever the network cooperates — **the package itself is fine; failures are network failures.**
 
 **B. Straight into a profile**
 

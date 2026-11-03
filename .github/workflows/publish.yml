@@ -1,0 +1,48 @@
+name: publish
+
+# Publishing is what makes the plugin installable by name through a registry
+# mirror: the plugin dialog's "mainland China mirror" source only rewrites
+# registry installs, never GitHub addresses or .tgz links. Tag a release and
+# this workflow puts the same tree on npm.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      # A tag that does not match the manifest publishes the wrong version, and
+      # npm will not let the number be reused.
+      - name: Tag must match package.json
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          pkg="$(node -p "require('./package.json').version")"
+          if [ "$tag" != "$pkg" ]; then
+            echo "tag v$tag does not match package.json $pkg" >&2
+            exit 1
+          fi
+
+      # The bundle is loaded straight from the package, so a missing runtime
+      # file breaks every install while the publish itself still succeeds.
+      - name: Runtime files are present
+        run: |
+          for f in index.js client.js cordis.patch.yml icon.svg locale/en.json locale/zh.json; do
+            test -f "$f" || { echo "missing $f" >&2; exit 1; }
+          done
+          node -p "JSON.stringify(require('./package.json').dsh.bundle)"
+
+      - run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
